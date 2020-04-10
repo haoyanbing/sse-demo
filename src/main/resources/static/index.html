@@ -5,6 +5,7 @@
     <title>sse-demo</title>
 </head>
 <body>
+<input id="input">
 <button onclick="start()">start</button>
 <button onclick="stop()">stop</button>
 <div id="content">
@@ -18,7 +19,8 @@
 
     function start() {
         if (typeof (EventSource) !== "undefined") {
-            source = new EventSource('push');
+            var id = document.getElementById("input").value;
+            source = new EventSource('connect?id=' + id);
             source.addEventListener('message', function (e) {
                 var p = document.createElement("p");
                 p.innerText = e.data;
@@ -35,6 +37,7 @@
                 var p = document.createElement("p");
                 p.innerText = "error...";
                 content.appendChild(p);
+                console.log(e);
             });
         } else {
             var p = document.createElement("p");
