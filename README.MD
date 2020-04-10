@@ -43,3 +43,8 @@ if (typeof (EventSource) !== "undefined") {
     // 您的浏览器不支持 Server-Sent Events!
 }
 ```
+## 使用demo
+1. 以springboot方式启动demo程序
+2. 浏览器打开：http://localhost:8080
+3. 点击 `start` 按钮开始建立连接，服务器每3秒会向客户端推送一条消息
+4. 点击 `stop` 按钮断开连接
