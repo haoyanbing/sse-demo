@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sse-demo</title>
+</head>
+<body>
+<button onclick="start()">start</button>
+<button onclick="stop()">stop</button>
+<div id="content">
+
+</div>
+
+<script>
+
+    var source = null;
+    var content = document.getElementById("content");
+
+    function start() {
+        if (typeof (EventSource) !== "undefined") {
+            source = new EventSource('push');
+            source.addEventListener('message', function (e) {
+                var p = document.createElement("p");
+                p.innerText = e.data;
+                content.appendChild(p);
+            });
+
+            source.addEventListener('open', function (e) {
+                var p = document.createElement("p");
+                p.innerText = "open connecting...";
+                content.appendChild(p);
+            });
+
+            source.addEventListener('error', function (e) {
+                var p = document.createElement("p");
+                p.innerText = "error...";
+                content.appendChild(p);
+            });
+        } else {
+            var p = document.createElement("p");
+            p.innerText = "您的浏览器不支持 Server Sent Event!";
+            content.appendChild(p);
+        }
+    }
+
+    function stop() {
+        if (source) {
+            source.close();
+            var p = document.createElement("p");
+            p.innerText = "stop...";
+            content.appendChild(p);
+        }
+    }
+
+</script>
+</body>
+</html>
