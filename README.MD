@@ -5,8 +5,12 @@
 
 SSE是HTML5规范中的一个组成部分，主流的浏览器都支持（IE除外）。
 
-## 与其他方案对比
-
+## 与WebSocket对比
+- WebSocket是全双工通道，可以双向通信，功能更强；SSE是单向通道，只能服务器向浏览器端发送。
+- WebSocket是一个新的协议，需要服务器端支持；SSE则是部署在HTTP协议之上的，现有的服务器软件都支持。
+- SSE是一个轻量级协议，相对简单；WebSocket是一种较重的协议，相对复杂。
+- SSE默认支持断线重连，WebSocket则需要额外部署。
+- SSE支持自定义发送的数据类型。
 
 ## 服务端示例
 ```java
@@ -27,10 +31,10 @@ public void getStreamDataImprove(HttpServletResponse response) throws IOExceptio
         }
     }
 }
-
+// --------------------------------------------------------------
 // Spring的SseEmitter实现
 public static Map<String, SseEmitter> map = new ConcurrentHashMap<>();
-
+// 建立连接
 @RequestMapping(value = "/connect")
 public SseEmitter connect(@RequestParam("id") String id) throws IOException {
     SseEmitter sseEmitter = new SseEmitter(0L);
